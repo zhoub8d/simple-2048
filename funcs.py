@@ -20,17 +20,14 @@ def newNumber(board):
 
     while board[index] != 0:
         index = round(random()*15);
-    #print(index)
 
     board[index] = 2
     return board
 
 
 def shiftArrayBack(array, start, ref): #shift given array one step back (no rollover)
-    #print("start value is" + str(start))
     l = len(array)
     newArray = array
-    #while newArray[start] == ref:
     newArray[start:l-1] = array[start + 1:l]
     newArray[l - 1] = ref
     return newArray
@@ -39,7 +36,6 @@ def shiftArrayForward(array, start, ref): #shift given array one step forwards
     
     l = len(array)
     newArray = array
-    #while newArray[l-start-1] == ref:
     newArray[1:start+1] = array[0:start]
     newArray[0] = ref
     return newArray
@@ -52,15 +48,6 @@ def applyMask(array, num): #get a 1 or 0 mask for whichever values match the inp
         if array[i] == num:
             out[i] = 1
     return out
-
-""" def printBoard(board):
-    sep_str = "_|_"
-    print(board[0], board[1], board[2], board[3], sep=sep_str)
-    print(board[4], board[5], board[6], board[7], sep=sep_str)
-    print(board[8], board[9], board[10], board[11], sep=sep_str)
-    print(board[12], board[13], board[14], board[15], sep=sep_str)
-    print("\n") """
-
 
 def convertNum(num):
     if num < 10:
@@ -89,7 +76,6 @@ def printBoard(board):
         for col in range(4):
             s += convertNum(board[row*4 + col]) + "_|_"
 
-        #s += "_|"
         s = s[0:len(s)-1]
         print(s)
     print("\n")
@@ -99,7 +85,6 @@ def move(board, direction):
     newBoard = board
 
     for m in range(4): #go down board each row or column at a time
-        #print("m is " + str(m))
         vec_start_index = m*4 #index for start, converting 4x4 grid to the 16x1 array
 
         vec = [0, 0, 0, 0]
@@ -111,9 +96,7 @@ def move(board, direction):
             for count in range(3-m, len(board), 4):
                 vec[k] = board[count]
                 k = k + 1                             #columns
-            #vec = board[range(3-m, len(board), 4)]
         l = len(vec)
-        #print("vector is" + str(vec))
 
         if any(vec):
             #----------------add adjacent identical numbers, no matter if they're separated by zeros or not----------------------------
@@ -152,40 +135,27 @@ def move(board, direction):
             ind = 0
 
             if (direction=="left") | (direction=="up"):
-            #if flag==0: #left and up
                 while ind < l-1:
                     mask = applyMask(vec, ref)
-                    #print("mask is" + str(mask))
 
                     if any(vec[ind:]) == False:
                         ind = l
 
                     elif mask[ind]:
-                        #print("ind is " + str(ind))
-                        #print("mask[ind] is " + str(mask[ind]))
                         vec = shiftArrayBack(vec, ind, ref)
-                        #print("new vector is" + str(vec))
                     else:
                         ind = ind + 1
-                
-                #newBoard[vec_start_index:vec_start_index + 4] = vec
-                #print("final new vec is " + str(vec))
             else:                                           #right and down
                 while ind < l-1:
                     mask = applyMask(vec, ref)
-                    #print("mask is" + str(mask))
 
                     reverse_ind = l-ind-1
-                    #print(reverse_ind)
 
                     if any(vec[0:reverse_ind+1]) == False:
                         ind = l
 
                     elif mask[reverse_ind]:
-                        #print("ind is " + str(ind))
-                        #print("mask[ind] is " + str(mask[ind]))
                         vec = shiftArrayForward(vec, reverse_ind, ref)
-                        #print("new vector is" + str(vec))
                     else:
                         ind = ind + 1
                 
@@ -198,8 +168,6 @@ def move(board, direction):
                     newBoard[count] = vec[k]
                     k = k + 1
 
-    # print(board)
-    # print(newBoard)
     return newBoard
             
 
