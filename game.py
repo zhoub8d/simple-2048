@@ -1,5 +1,4 @@
 import funcs
-#import time
 
 from msvcrt import kbhit, getch
 
@@ -14,13 +13,12 @@ while 1:
 
     if kbhit():
         key = ord(getch()) 
-        #print(key)
+        
+        #Arrow key numbers:
         #Up = 72
         #Left = 75
         #Down = 80
         #Right = 77
-        
-        
         
         if key==32:                                         #press space to reset the board whenever
             board = funcs.startBoard()
